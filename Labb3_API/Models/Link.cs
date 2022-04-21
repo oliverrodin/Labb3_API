@@ -8,7 +8,12 @@ namespace Labb3_API.Models
         public string Url { get; set; } = string.Empty;
 
         //Realtions 
-        public ICollection<Person> Persons { get; set; }
-        public ICollection<Interest> Interests { get; set; }
+
+        public Interest Interest { get; set; }
+        public int InterestId { get; set; }
+
+        public Person Person { get; set; }
+        public int PersonId { get; set; }
+
     }
 }

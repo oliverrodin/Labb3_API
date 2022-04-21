@@ -1,4 +1,7 @@
 using Labb3_API.Data;
+using Labb3_API.Services.InterestService;
+using Labb3_API.Services.LinkService;
+using Labb3_API.Services.PersonService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IInterestService, InterestService>();
+builder.Services.AddScoped<ILinkService, LinkService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

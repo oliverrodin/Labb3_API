@@ -3,6 +3,7 @@ using Labb3_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Labb3_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220421122436_ChangeRelationBetweenInterestAndLink")]
+    partial class ChangeRelationBetweenInterestAndLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,21 +22,6 @@ namespace Labb3_API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("InterestLink", b =>
-                {
-                    b.Property<int>("InterestsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LinksId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InterestsId", "LinksId");
-
-                    b.HasIndex("LinksId");
-
-                    b.ToTable("InterestLink");
-                });
 
             modelBuilder.Entity("InterestPerson", b =>
                 {
@@ -80,11 +67,16 @@ namespace Labb3_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("InterestId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InterestId");
 
                     b.ToTable("Links");
                 });
@@ -132,21 +124,6 @@ namespace Labb3_API.Migrations
                     b.ToTable("LinkPerson");
                 });
 
-            modelBuilder.Entity("InterestLink", b =>
-                {
-                    b.HasOne("Labb3_API.Models.Interest", null)
-                        .WithMany()
-                        .HasForeignKey("InterestsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Labb3_API.Models.Link", null)
-                        .WithMany()
-                        .HasForeignKey("LinksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("InterestPerson", b =>
                 {
                     b.HasOne("Labb3_API.Models.Interest", null)
@@ -162,6 +139,17 @@ namespace Labb3_API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Labb3_API.Models.Link", b =>
+                {
+                    b.HasOne("Labb3_API.Models.Interest", "Interest")
+                        .WithMany("Links")
+                        .HasForeignKey("InterestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Interest");
+                });
+
             modelBuilder.Entity("LinkPerson", b =>
                 {
                     b.HasOne("Labb3_API.Models.Link", null)
@@ -175,6 +163,11 @@ namespace Labb3_API.Migrations
                         .HasForeignKey("PersonsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Labb3_API.Models.Interest", b =>
+                {
+                    b.Navigation("Links");
                 });
 #pragma warning restore 612, 618
         }
