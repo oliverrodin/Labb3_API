@@ -1,16 +1,16 @@
 
 
 
-**- Hämta alla personer i systemet**
+**- Hämta alla personer i systemet =>** 
     (GET) https://localhost:7097/api/Person
 
-**- Hämta alla intressen som är kopplade till en specifik person**
+**- Hämta alla intressen som är kopplade till en specifik person =>** 
     (GET) https://localhost:7097/api/Interest/byperson/{personId}
 
-**- Hämta alla länkar som är kopplade till en specifik person**
+**- Hämta alla länkar som är kopplade till en specifik person =>**
     (GET) https://localhost:7097/api/Link/byperson/{personId}
 
-**- Koppla en person till ett nytt intresse**
+**- Koppla en person till ett nytt intresse =>**
     (PUT) https://localhost:7097/api/Person/updateinterest/{personId}
 
     REQUEST BODY:
@@ -22,9 +22,9 @@
         "links": []
     }
 
-    Finns inte id:t i request bodyn så skapas en nytt intresse.
+   Finns inte id:t i request bodyn så skapas en nytt intresse.
 
-**- Lägga in nya länkar för en specifik person och ett specifikt intresse**
+**- Lägga in nya länkar för en specifik person och ett specifikt intresse =>**
     (PUT) https://localhost:7097/api/Person/addlink/{personId}/{interestId}
     
     REQUEST BODY:
