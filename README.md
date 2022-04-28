@@ -1,7 +1,7 @@
 
 
 
-- [ ]  Hämta alla personer i systemet
+**- Hämta alla personer i systemet**
 
 (GET) https://localhost:7097/api/Person
 
